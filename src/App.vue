@@ -1,21 +1,18 @@
 <template>
-  <el-container style="height:100%;padding:0;margin:0;width:100%">
-  <el-header>
-  <div class="App">
-    <div style="background-color: #EBEBEB;min-height:800px">
-        <div style="width:100%;background-color: #636363; overflow: hidden">
-            <span class="demonstration" style="float:left;padding-top:10px;color:white;margin-left:1%">
-                <el-breadcrumb separator-class="el-icon-arrow-right">
+  <el-container>
+  <el-header class="mainheader">
+            <span class="demonstration" style="float:left;padding-top:5px;color:white">
+                <el-breadcrumb separator="" style="margin-top:15px !importent">
                   <el-breadcrumb-item>
                     <router-link to="/Homepage">
-                    <el-button type="text" icon="el-icon-s-home" @select="handleSelect">Homepage</el-button>
+                    <el-button type="text" icon="el-icon-s-home" @select="handleSelect">主页</el-button>
                     </router-link>
                   </el-breadcrumb-item>
                   <el-breadcrumb-item>
                     <el-dropdown trigger="click">
                   <span class="el-dropdown-link" style="color:white">
                     <el-button type="text" icon="el-icon-menu">
-                      menu<i class="el-icon-caret-bottom el-icon--right"></i>
+                      项目<i class="el-icon-caret-bottom el-icon--right"></i>
                     </el-button>
                   </span>
                   <el-dropdown-menu slot="dropdown">
@@ -31,12 +28,12 @@
                   </el-breadcrumb-item>
                   <el-breadcrumb-item>
                     <router-link to="/About">
-                    <el-button type="text" icon="el-icon-info">About</el-button>
+                    <el-button type="text" icon="el-icon-info">关于我们</el-button>
                     </router-link>
                   </el-breadcrumb-item>
                 </el-breadcrumb>
             </span>
-            <span class="demonstration" style="float:right;padding-top:10px;margin-right:1%">
+            <!-- <span class="demonstration" style="float:right;padding-top:10px;margin-right:1%">
                 <el-dropdown trigger="click">
                   <span class="el-dropdown-link" style="color:white">
                     <i class="el-icon-user-solid"></i>admin<i class="el-icon-caret-bottom el-icon--right"></i>
@@ -46,26 +43,26 @@
                     <el-dropdown-item>退出登录</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
-            </span>
-        </div>
-    </div>
-  </div>
+            </span> -->
   </el-header>
-  <el-main>
-    <router-view></router-view>
-  </el-main>
-  <el-footer>Footer</el-footer>
+  <div id="v-content" v-bind:style="{minHeight: Height+'px'}"><router-view /></div>
+  <el-footer></el-footer>
   </el-container>
 </template>
 
 <script>
 export default {
-  data(){
+    data(){
     return {
     searchCriteria: '',
     breadcrumbItems: ['数据可视化一'],
       }
     },
+    mounted(){
+    //动态设置内容高度 让footer始终居底   header+footer的高度是100
+    this.Height = document.documentElement.clientHeight - 100;  　　//监听浏览器窗口变化　
+    window.onresize = ()=> {this.Height = document.documentElement.clientHeight -100}
+  },
   methods:{
     handleSelect(key, keyPath){
       switch(key){
@@ -87,3 +84,21 @@ export default {
   }
 }
 </script>
+<style>
+.el-container {
+  display: flex;
+  background-color: #FAFAFA;
+  height:100%;
+  margin:0;
+  box-sizing: border-box;
+}
+.mainheader {
+    background-color: #37474F;
+    text-align: center;
+    height: 50px !important;
+}
+.el-footer {
+  background-color:#37474F;
+  height: 20px !important;
+}
+</style>
